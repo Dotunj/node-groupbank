@@ -12,12 +12,13 @@ exports.create = async (req, res, next) => {
         errors: errors.array()
       });
     }
+    const { txnref } = req.body;
     const {
       data: {
         data: { card: cardDetails }
       },
       data: { status }
-    } = await verifyCardTransaction(req.body.txnref, req);
+    } = await verifyCardTransaction(txnref);
     if (status !== SUCCESS) throwError("Payment Failed", 401);
     const card = await storeCard(cardDetails);
     res.json({ message: "card has been added successfully", card });
