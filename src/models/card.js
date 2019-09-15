@@ -7,8 +7,28 @@ module.exports = (sequelize, DataTypes) => {
     "Card",
     {
       uuid: DataTypes.UUID,
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id"
+        }
+      },
       last_four: {
         type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      expiry_month: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      expiry_year: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      token: {
+        type: DataTypes.STRING,
         allowNull: false
       }
     },
@@ -17,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
   Card.beforeCreate(card => (card.uuid = uuid()));
   Card.associate = function(models) {
     // associations can be defined here
-    Card.belongsTo(models.User);
+    Card.belongsTo(models.User, { foreignKey: "userId" });
   };
   return Card;
 };

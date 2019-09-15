@@ -43,7 +43,7 @@ exports.login = async (req, res, next) => {
         expiresIn: "5h"
       }
     );
-    res.json({ token, userId: user.uuid.toString() });
+    res.json({ token, userId: user.id.toString() });
   } catch (err) {
     sendError(err, next);
   }
