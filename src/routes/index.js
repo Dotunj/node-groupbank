@@ -5,6 +5,7 @@ const { body } = require("express-validator");
 const { User } = require("../models");
 const { isAuth } = require("../middleware/isAuth");
 const cardController = require("../controllers/cardController");
+const beneficiaryController = require("../controllers/beneficiaryController");
 
 router.post(
   "/register",
@@ -40,5 +41,12 @@ router.post(
   cardController.create
 );
 router.delete("/card/delete/:uuid", isAuth, cardController.delete);
+
+router.get("/banks", beneficiaryController.listAllBanks);
+router.post(
+  "/beneficiary/create",
+  [body("recipient_account").exists(), body("bank_code").exists()],
+  beneficiaryController.create
+);
 
 module.exports = router;
