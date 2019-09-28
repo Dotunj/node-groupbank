@@ -13,11 +13,12 @@ const throwError = (message, errorCode) => {
 };
 
 const sendError = (err, next) => {
-  if(! err.statusCode){
-      err.statusCode = 500;
+  if (!err.statusCode) {
+    err.statusCode = 500;
   }
   next(err);
-}
+};
+
 
 module.exports = {
   to,

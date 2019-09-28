@@ -24,6 +24,13 @@ const isAuth = (req, res, next) => {
   next();
 };
 
+const authenticatedUser = userId => {
+  return new Promise((resolve, reject) => {
+    resolve(User.findOne({ where: { id: userId } }));
+  });
+};
+
 module.exports = {
-    isAuth
+    isAuth,
+    authenticatedUser
 }

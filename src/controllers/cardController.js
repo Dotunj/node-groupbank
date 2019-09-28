@@ -1,5 +1,6 @@
 const { throwError, sendError } = require("../util/helpers");
 const { validationResult } = require("express-validator");
+const { authenticatedUser } = require("../middleware/isAuth");
 const {
   verifyCardTransaction,
   storeCard,
@@ -7,6 +8,16 @@ const {
 } = require("../services/cardService");
 const { Card } = require("../models");
 const SUCCESS = "success";
+
+exports.index = async (req, res, next) => {
+  try {
+    const user = await authenticatedUser(req.userId);
+    const cards = await user.getCards();
+    res.json(cards);
+  } catch (err) {
+    sendError(err, next);
+  }
+};
 
 exports.create = async (req, res, next) => {
   try {

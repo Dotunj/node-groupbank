@@ -34,6 +34,7 @@ router.post(
   authController.login
 );
 
+router.get("/cards/all", isAuth, cardController.index);
 router.post(
   "/card/create",
   isAuth,
@@ -45,8 +46,14 @@ router.delete("/card/delete/:uuid", isAuth, cardController.delete);
 router.get("/banks", beneficiaryController.listAllBanks);
 router.post(
   "/beneficiary/create",
-  [body("recipient_account").exists(), body("bank_code").exists()],
+  isAuth,
+  [
+    body("recipient_account").exists(),
+    body("bank_code").exists(),
+    body("card_id").exists()
+  ],
   beneficiaryController.create
 );
+router.delete("/beneficiary/delete/:uuid", isAuth);
 
 module.exports = router;
