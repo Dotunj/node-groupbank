@@ -54,6 +54,10 @@ router.post(
   ],
   beneficiaryController.create
 );
-router.delete("/beneficiary/delete/:uuid", isAuth);
+
+router.get('/beneficiaries', isAuth, beneficiaryController.index)
+router.get('/beneficiary/edit/:uuid', isAuth, beneficiaryController.edit);
+router.put('/beneficiary/update/:uuid', isAuth, beneficiaryController.update);
+router.delete("/beneficiary/delete/:uuid", isAuth, beneficiaryController.delete);
 
 module.exports = router;

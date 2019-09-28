@@ -20,11 +20,32 @@ const storeBeneficiary = ({
   });
 };
 
-const findBeneficiary = (uuid) => {
+const findBeneficiary = uuid => {
   return new Promise((resolve, reject) => {
-    resolve(beneficiary.findOne({ where: { uuid }}))
-  })
-}
+    resolve(Beneficiary.findOne({ where: { uuid } }));
+  });
+};
+
+const updateBeneficiary = ({
+  userId,
+  beneficiary,
+  cardId,
+  recipientAccount,
+  bankCode,
+  accountName
+}) => {
+  return new Promise((resolve, reject) => {
+    resolve(
+      beneficiary.update({
+        userId,
+        cardId,
+        account_name: accountName,
+        bank_code: bankCode,
+        account_number: recipientAccount
+      })
+    );
+  });
+};
 
 const deleteBeneficiary = beneficiary => {
   return new Promise((resolve, reject) => {
@@ -35,5 +56,6 @@ const deleteBeneficiary = beneficiary => {
 module.exports = {
   storeBeneficiary,
   findBeneficiary,
+  updateBeneficiary,
   deleteBeneficiary
 };
