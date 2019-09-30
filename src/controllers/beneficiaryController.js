@@ -125,7 +125,7 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const beneficiary = await findBeneficiary(req.params.uuid);
-    if (!beneficiary) throwError("Beneificiary does not exist", 404);
+    if (!beneficiary) throwError("Beneficiary does not exist", 404);
     if (beneficiary.userId != req.userId) throwError("Unauthorized", 403);
     await deleteBeneficiary(beneficiary);
     res.json({ message: "beneficiary has been deleted succesfully" });

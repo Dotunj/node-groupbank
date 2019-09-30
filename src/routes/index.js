@@ -6,6 +6,7 @@ const { User } = require("../models");
 const { isAuth } = require("../middleware/isAuth");
 const cardController = require("../controllers/cardController");
 const beneficiaryController = require("../controllers/beneficiaryController");
+const scheduleController = require('../controllers/scheduleController');
 
 router.post(
   "/register",
@@ -54,10 +55,11 @@ router.post(
   ],
   beneficiaryController.create
 );
-
 router.get('/beneficiaries', isAuth, beneficiaryController.index)
 router.get('/beneficiary/edit/:uuid', isAuth, beneficiaryController.edit);
 router.put('/beneficiary/update/:uuid', isAuth, beneficiaryController.update);
 router.delete("/beneficiary/delete/:uuid", isAuth, beneficiaryController.delete);
+
+router.get('/schedules/list', isAuth, scheduleController.list);
 
 module.exports = router;
