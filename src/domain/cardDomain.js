@@ -1,4 +1,4 @@
-const Flutterwave = require("./Flutterwave");
+const Flutterwave = require("../services/Flutterwave");
 const { Card } = require("../models");
 
 const verifyCardTransaction = txnref => {

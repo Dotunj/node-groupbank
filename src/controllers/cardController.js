@@ -5,7 +5,7 @@ const {
   verifyCardTransaction,
   storeCard,
   deleteCard
-} = require("../services/cardService");
+} = require("../domain/cardDomain");
 const { Card } = require("../models");
 const SUCCESS = "success";
 
@@ -13,7 +13,7 @@ exports.index = async (req, res, next) => {
   try {
     const user = await authenticatedUser(req.userId);
     const cards = await user.getCards();
-    res.json(cards);
+    res.status(201).json(cards);
   } catch (err) {
     sendError(err, next);
   }

@@ -1,4 +1,4 @@
-const Flutterwave = require("./Flutterwave");
+const Flutterwave = require("../services/Flutterwave");
 
 const listAllBanks = () => {
   const flutterwave = new Flutterwave();

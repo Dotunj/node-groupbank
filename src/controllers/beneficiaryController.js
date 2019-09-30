@@ -1,4 +1,4 @@
-const { listAllBanks, fetchAccountName } = require("../services/bankService");
+const { listAllBanks, fetchAccountName } = require("../domain/bankDomain");
 const { throwError, sendError } = require("../util/helpers");
 const { validationResult } = require("express-validator");
 const { authenticatedUser } = require("../middleware/isAuth");
@@ -7,7 +7,7 @@ const {
   findBeneficiary,
   updateBeneficiary,
   deleteBeneficiary
-} = require("../services/beneficiaryService");
+} = require("../domain/beneficiaryDomain");
 const SUCCESS = "00";
 
 exports.listAllBanks = async (req, res, next) => {

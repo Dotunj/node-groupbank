@@ -6,7 +6,7 @@ const { User } = require("../models");
 const { isAuth } = require("../middleware/isAuth");
 const cardController = require("../controllers/cardController");
 const beneficiaryController = require("../controllers/beneficiaryController");
-const scheduleController = require('../controllers/scheduleController');
+const scheduleController = require("../controllers/scheduleController");
 
 router.post(
   "/register",
@@ -35,6 +35,7 @@ router.post(
   authController.login
 );
 
+//cards
 router.get("/cards/all", isAuth, cardController.index);
 router.post(
   "/card/create",
@@ -44,6 +45,7 @@ router.post(
 );
 router.delete("/card/delete/:uuid", isAuth, cardController.delete);
 
+//beneficiaries
 router.get("/banks", beneficiaryController.listAllBanks);
 router.post(
   "/beneficiary/create",
@@ -55,11 +57,29 @@ router.post(
   ],
   beneficiaryController.create
 );
-router.get('/beneficiaries', isAuth, beneficiaryController.index)
-router.get('/beneficiary/edit/:uuid', isAuth, beneficiaryController.edit);
-router.put('/beneficiary/update/:uuid', isAuth, beneficiaryController.update);
-router.delete("/beneficiary/delete/:uuid", isAuth, beneficiaryController.delete);
+router.get("/beneficiaries", isAuth, beneficiaryController.index);
+router.get("/beneficiary/edit/:uuid", isAuth, beneficiaryController.edit);
+router.put("/beneficiary/update/:uuid", isAuth, beneficiaryController.update);
+router.delete(
+  "/beneficiary/delete/:uuid",
+  isAuth,
+  beneficiaryController.delete
+);
 
-router.get('/schedules/list', isAuth, scheduleController.list);
+//schedules
+router.get("/schedules/list", isAuth, scheduleController.list);
+router.get("/schedule/edit/:uuid", isAuth, scheduleController.edit);
+router.post(
+  "/schedule/create",
+  isAuth,
+  [
+    body("amount").exists(),
+    body("charge_date").exists(),
+    body("active").exists()
+  ],
+  scheduleController.create
+);
+router.put("/schedule/update/:uuid", isAuth, scheduleController.update);
+router.delete("/schedule/delete/:uuid", isAuth, scheduleController.delete);
 
 module.exports = router;
