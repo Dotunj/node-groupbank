@@ -1,4 +1,5 @@
 const ChargeAttemptSuccessSlackNotification = require("../notifications/ChargeAttemptSuccessSlackNotification");
+const ChargeAttemptSuccessMail = require("../mails/ChargeAttemptSuccessMail");
 const { ChargeAttempt } = require("../models");
 const COMPLETED = "completed";
 
@@ -9,11 +10,20 @@ class ChargeAttemptSuccessSubscriber {
     });
   }
 
-  notifySlack(chargeAttempt) {
+  notifyViaSlack(chargeAttempt) {
     const notification = new ChargeAttemptSuccessSlackNotification(
       chargeAttempt
     );
     notification.notify();
+  }
+
+  notifyViaEmail(chargeAttempt) {
+    setImmediate(() => {
+      const chargeAttemptSuccessMail = new ChargeAttemptSuccessMail(
+        chargeAttempt
+      );
+      return chargeAttemptSuccessMail.sendMail();
+    });
   }
 
   markAsCompleted(chargeAttempt) {

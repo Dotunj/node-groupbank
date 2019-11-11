@@ -2,13 +2,13 @@ const slackWebhookUrl =
   "https://hooks.slack.com/services/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";
 const slack = require("slack-notify")(slackWebhookUrl);
 
-class ChargeAttemptSuccessSlackNotification {
+class ChargeAttemptFailedSlackNotification {
   constructor(chargeAttempt) {
     this.chargeAttempt = chargeAttempt;
   }
   notify() {
     slack.alert({
-      text: "A successful Charge Attempt just occured on GroupBank",
+      text: "A Charge Attempt just failed on GroupBank",
       fields: {
         Amount: `N ${this.chargeAttempt.amount}`
       }
@@ -16,4 +16,4 @@ class ChargeAttemptSuccessSlackNotification {
   }
 }
 
-module.exports = ChargeAttemptSuccessSlackNotification;
+module.exports = ChargeAttemptFailedSlackNotification;

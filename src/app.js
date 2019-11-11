@@ -7,6 +7,7 @@ const port = 7777;
 require('dotenv').config();
 require('./events/eventServiceProvider');
 const DispatchSchedule = require('../src/services/DispatchSchedule')
+const chargeAttemptMail = require('../src/mails/ChargeAttemptSuccessMail');
 
 
 app.use(bodyParser.json());
@@ -30,6 +31,11 @@ app.use((error, req, res, next) => {
 
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
+  const options = {
+    amount: 10000
+  };
+ // const mail = new chargeAttemptMail(options);
+ // mail.sendMail();
   //console.log(crypto.randomBytes(5).toString('hex'));
    //DispatchSchedule.chargeAllSchedulesDue();
 });
