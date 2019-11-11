@@ -5,7 +5,8 @@ const {
   createSchedule,
   findSchedule,
   updateSchedule,
-  deleteSchedule
+  deleteSchedule,
+  allDueSchedules
 } = require("../domain/scheduleDomain");
 
 exports.list = async (req, res, next) => {
@@ -16,6 +17,16 @@ exports.list = async (req, res, next) => {
       user.getBeneficiaries()
     ]);
     res.json({ cards, beneficiaries });
+  } catch (err) {
+    sendError(err, next);
+  }
+};
+
+exports.dueSchedules = async (req, res, next) => {
+  try {
+    const date = "2019-10-24";
+    const schedules = await allDueSchedules(date);
+    res.json({ schedules });
   } catch (err) {
     sendError(err, next);
   }
@@ -79,7 +90,7 @@ exports.update = async (req, res, next) => {
       chargeDate: req.body.charge_date,
       active: req.body.active
     };
-    schedule = updateSchedule(scheduleDetails);
+    schedule = await updateSchedule(scheduleDetails);
     res.json({ message: "Schedule has been updated successfully", schedule });
   } catch (err) {
     sendError(err, next);

@@ -5,7 +5,8 @@ const cors = require("cors");
 const routes = require("./routes/index");
 const port = 7777;
 require('dotenv').config();
-const Flutterwave = require('./services/Flutterwave');
+require('./events/eventServiceProvider');
+const DispatchSchedule = require('../src/services/DispatchSchedule')
 
 
 app.use(bodyParser.json());
@@ -29,4 +30,6 @@ app.use((error, req, res, next) => {
 
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
+  //console.log(crypto.randomBytes(5).toString('hex'));
+   //DispatchSchedule.chargeAllSchedulesDue();
 });

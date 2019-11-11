@@ -3,7 +3,6 @@ const { Beneficiary } = require("../models");
 const storeBeneficiary = ({
   userId,
   cardId,
-  recipientAccount,
   bankCode,
   accountName
 }) => {

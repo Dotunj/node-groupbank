@@ -1,12 +1,11 @@
 "use strict";
+
+const uuid = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   const Schedule = sequelize.define(
     "Schedule",
     {
-      uuid: {
-        type: DataTypes.UUID,
-        allowNull: false
-      },
+      uuid: DataTypes.UUID,
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -36,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       charge_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
       },
       active: {
@@ -45,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
+  Schedule.beforeCreate(schedule => (schedule.uuid = uuid()));
   Schedule.associate = function(models) {
     Schedule.belongsTo(models.User, { foreignKey: "userId" });
     Schedule.belongsTo(models.Card, { foreignKey: "cardId" });

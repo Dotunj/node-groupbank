@@ -1,7 +1,18 @@
 const { Schedule } = require("../models");
 
-const createSchedule = ({}) => {
-  return new Promise((resolve, reject) => {});
+const createSchedule = attributes => {
+  return new Promise((resolve, reject) => {
+    resolve(
+      Schedule.create({
+        userId: attributes.userId,
+        cardId: attributes.cardId,
+        beneficiaryId: attributes.beneficiaryId,
+        amount: attributes.amount,
+        charge_date: attributes.chargeDate,
+        active: attributes.active
+      })
+    );
+  });
 };
 
 const findSchedule = uuid => {
@@ -10,17 +21,17 @@ const findSchedule = uuid => {
   });
 };
 
-const updateSchedule = details => {
+const updateSchedule = attributes => {
   return new Promise((resolve, reject) => {
-    const schedule = details.schedule;
+    const schedule = attributes.schedule;
     resolve(
       schedule.update({
-        userId: details.userId,
-        cardId: details.cardId,
-        beneficiaryId: details.beneficiaryId,
-        amount: details.amount,
-        chargeDate: details.chargeDate,
-        active: details.active
+        userId: attributes.userId,
+        cardId: attributes.cardId,
+        beneficiaryId: attributes.beneficiaryId,
+        amount: attributes.amount,
+        chargeDate: attributes.chargeDate,
+        active: attributes.active
       })
     );
   });
@@ -28,7 +39,20 @@ const updateSchedule = details => {
 
 const deleteSchedule = schedule => {
   return new Promise((resolve, reject) => {
-    resolve(schedule.destroy);
+    resolve(schedule.destroy());
+  });
+};
+
+const allDueSchedules = date => {
+  return new Promise((resolve, reject) => {
+    resolve(
+      Schedule.findAll({
+        where: {
+          charge_date: date,
+          active: true
+        }
+      })
+    );
   });
 };
 
@@ -36,5 +60,6 @@ module.exports = {
   createSchedule,
   findSchedule,
   updateSchedule,
-  deleteSchedule
+  deleteSchedule,
+  allDueSchedules
 };

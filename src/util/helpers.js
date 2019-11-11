@@ -1,3 +1,5 @@
+const EventEmitter = require('events');
+
 const to = promise => {
   return promise
     .then(data => {
@@ -19,9 +21,14 @@ const sendError = (err, next) => {
   next(err);
 };
 
+const myEmitter = () => {
+  return new EventEmitter();
+};
+
 
 module.exports = {
   to,
   throwError,
-  sendError
+  sendError,
+  myEmitter
 };

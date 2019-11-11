@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("Schedules", {
+    return queryInterface.createTable('ChargeAttempts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,6 +10,7 @@ module.exports = {
       },
       uuid: {
         type: Sequelize.UUID,
+        allowNull: false
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -19,32 +20,25 @@ module.exports = {
           key: "id"
         }
       },
-      cardId: {
+      scheduleId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
-          model: "Cards",
+          model: "Schedules",
           key: "id"
         }
       },
-      beneficiaryId: {
-        type: Sequelize.INTEGER,
+      txnref: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "Beneficiaries",
-          key: "id"
-        }
+        unique: true
       },
       amount: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false
       },
-      charge_date: {
-        type: Sequelize.DATEONLY,
+      status: {
+        type: Sequelize.STRING,
         allowNull: false
-      },
-      active: {
-        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -57,6 +51,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Schedules");
+    return queryInterface.dropTable('ChargeAttempts');
   }
 };

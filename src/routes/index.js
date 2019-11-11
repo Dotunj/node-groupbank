@@ -81,5 +81,6 @@ router.post(
 );
 router.put("/schedule/update/:uuid", isAuth, scheduleController.update);
 router.delete("/schedule/delete/:uuid", isAuth, scheduleController.delete);
+router.get("/schedules", isAuth, scheduleController.dueSchedules);
 
 module.exports = router;
